@@ -1,0 +1,48 @@
+/* tailwind 를 css 에 넣어주는 설정 */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+/* 기본 폰트 pretendard 설정 */
+@font-face {
+  font-family: "Pretendard-Regular";
+  src: url("https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff")
+    format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+
+body {
+  font-family: "Pretendard-Regular";
+}
+
+/* 스크롤바 설정 */
+/* width */
+::-webkit-scrollbar {
+  border-radius: 8px; /* 둥근 모서리의 크기 조정 */
+  width: 10px;
+}
+
+/* 스크롤바 트랙(경로)에 대한 스타일 */
+::-webkit-scrollbar-track {
+  border-radius: 8px; /* 둥근 모서리의 크기 조정 */
+  background: #fcfcfc;
+}
+
+/* 스크롤바 핸들(스크롤 막대)에 대한 스타일 */
+::-webkit-scrollbar-thumb {
+  background: #d9d9d9;
+  border-radius: 8px;
+}
+
+/* 스크롤바 호버 */
+::-webkit-scrollbar-thumb:hover {
+  background: #f0eded;
+}
+
+/* 드래그해서, 선택했을 때, 기본 색상 | Dribble */
+::selection {
+  background-color: rgba(255, 218, 121, 0.5);
+  color: #0d0c22; /* 필요에 따라 색상 조정 */
+}
