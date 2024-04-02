@@ -10,7 +10,7 @@ const ButtonNavigateRegister = () => {
     };
   return (
     <div>
-    <button onClick={onClickRegister}>로그인 페이지 이동</button>
+    <button onClick={onClickRegister}>회원가입 페이지 이동</button>
   </div>  )
 }
 

@@ -17,7 +17,7 @@ const LoginForm = () => {
     for (let [key, value] of formData.entries()) {
       console.log(key, value); // form 객체 확인 콘솔
     }
-
+  
     try {
       const response = await axios.get(
         "http://localhost:3000/auth/login/kakao ",
@@ -28,10 +28,15 @@ const LoginForm = () => {
       );
 
       console.log("loginAPI 응답", response);
+      
+      // response 받으면, accessToken 을 recoil 에 저장 -> 저장한 걸 axios 인터셉터 헤더에 넣기
+
+
     } catch (error) {
       console.log(error);
     }
   };
+
 
   return (
     <div>
