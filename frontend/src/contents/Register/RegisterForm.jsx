@@ -24,9 +24,8 @@ const RegisterForm = () => {
   // onSubmit 이벤트 발생시 POST 요청 보내기
   const onSubmitRegister = async (e) => {
     e.preventDefault();
-    const formData = new FormData();
 
-    // 유효성 검사
+    // 유효성 검사 | ✅ 로직 보완
     const { isNameValid, isPasswordValid, isEmailValid } = checkValid(
       name,
       password,
@@ -46,14 +45,7 @@ const RegisterForm = () => {
     };
 
     if (isRegisterValid) {
-      // formData.append("email", email); // input 의 name 속성으로 찾아옴
-      // formData.append("password", password);
-      // formData.append("name", name);
-      // formData.append("type", "local");
 
-      // for (let [key, value] of formData.entries()) {
-      //   console.log(key, value); // form 객체 확인 콘솔
-      // }
       console.log(userData , "userData")
 
       setIsSubmitting(true); // isSubmitting 가 true 면 -> 버튼 비활성화 -> 중복제출방지
@@ -148,3 +140,13 @@ export default RegisterForm;
 //   setEmailFieldError,
 //   setIsRegisterValid
 // );
+
+
+// formData.append("email", email); // input 의 name 속성으로 찾아옴
+// formData.append("password", password);
+// formData.append("name", name);
+// formData.append("type", "local");
+
+// for (let [key, value] of formData.entries()) {
+//   console.log(key, value); // form 객체 확인 콘솔
+// }
