@@ -3,6 +3,8 @@ import axios from "axios";
 import { ButtonHome } from "../../components/ButtonHome";
 import { useNavigate } from "react-router-dom";
 import checkLoginValid from "../../utils/checkLoginValid";
+import { useRecoilState } from "recoil";
+import { storedAccessToken } from "../../stores";
 
 /* 
   [test 계정]
@@ -15,6 +17,7 @@ const LoginForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [_accessToken, set_accessToken] = useRecoilState(storedAccessToken)
 
   const navigate = useNavigate();
 
@@ -53,13 +56,13 @@ const LoginForm = () => {
           }
         );
         console.log("loginAPI 응답", response);
-          // console.log("accessToken", response.data.access_token); // accessToken 받아짐 🔵 
-          // console.log("refresh_token", response.data.refresh_token); // refreshToken 받아짐 🔵
-
-        // 1. 우선, 여기에서 accesstoken 을 recoil 에 저장하고 
         
-
+        // console.log("accessToken", response.data.access_token); // accessToken 받아짐 🔵 
+        set_accessToken(response.data.access_token)  // recoil 에 accessToken 저장 | ✅ 이것도 intercept 차원에서 해야할지 고민 
+        
         // 2. refreshToken 은 cookies 에 저장하기 
+        // console.log("refresh_token", response.data.refresh_token); // refreshToken 받아짐 🔵
+        
 
 
         if (response) {
