@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ButtonNavigateLogin from "../components/ButtonNavigateLogin";
 import getCookie from "../utils/getRefreshTokenFromCookie";
-import { useRecoilState } from "recoil";
-import axiosInterceptor from "../apis/axiosInterceptor.js";
 import useAxiosInterceptor from "../apis/useAxiosInterceptor.js";
-import { storedAccessToken } from "../stores/index.js";
 
 const Main = () => {
   const axiosInstance = useAxiosInterceptor();
@@ -21,7 +18,7 @@ const Main = () => {
         console.error("fetchUserInfo 에러", error);
       }
     };
-    // fetchUserInfo();/
+    fetchUserInfo()
   }, [axiosInstance]);
   // 유저 accessToken 변경 -> recoil 저장값 변경 -> useRecoilValue 변경 -> axiosInstance가 변경 -> 함수를 다시 실행
 

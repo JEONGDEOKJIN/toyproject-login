@@ -9,7 +9,7 @@ const ButtonLogout = ({formReset}) => {
     const onClickLogout = () => {
     deleteCookies("refreshToken");
     formReset()
-    set_accessToken(null)
+    set_accessToken(undefined)
   };
 
   return (

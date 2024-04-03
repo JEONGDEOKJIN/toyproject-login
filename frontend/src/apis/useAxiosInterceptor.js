@@ -2,6 +2,7 @@ import axios from "axios";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { storedAccessToken } from "../stores";
 import getRefreshTokenFromCookie from "../utils/getRefreshTokenFromCookie";
+import { useNavigate } from "react-router-dom";
 
 // accessToken 을 매개변수로 받아서 해보기
 
@@ -9,6 +10,7 @@ const useAxiosInterceptor = () => {
   // const _accessToken = useRecoilValue(storedAccessToken);
   const refreshToken = getRefreshTokenFromCookie("refreshToken");
   const [_accessToken, set_accessToken] = useRecoilState(storedAccessToken);
+  const navigate = useNavigate();
 
   const axiosInstance = axios.create({
     baseURL: "http://localhost:3000",
@@ -38,7 +40,12 @@ const useAxiosInterceptor = () => {
     async function (error) {
       // '2xx 범위 이외' 에 있는 상태코드는 이 함수를 트리거 함. | 응답 오류가 있는 작업 수행
 
-      if (error.response.data.statusCode === 401 && error.response.data.statusCode === "token is invalid" && !error.config._retry) {
+      // 토큰 기간 만료 대응
+      if (
+        error.response.data.status === 401 &&
+        error.response.data.message === "token is expired" &&
+        !error.config._retry
+      ) {
         try {
           // 0. 추가 요청 방지 위한 설정 | '원래 요청'이 서버응답객체인 error.config 안에 있음
           error.config._retry = true;
@@ -70,6 +77,15 @@ const useAxiosInterceptor = () => {
             error
           );
         }
+      }
+
+      // 로그인 안 하고 입장 시도
+      if (
+        error.response.data.status === 403 &&
+        error.response.data.message === "token is invalid" &&
+        !error.config._retry
+      ) {
+        navigate("/login");
       }
 
       return Promise.reject(error);
