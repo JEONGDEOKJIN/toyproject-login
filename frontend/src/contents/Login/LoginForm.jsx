@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import checkLoginValid from "../../utils/checkLoginValid";
 import { useRecoilState } from "recoil";
 import { storedAccessToken } from "../../stores";
+import ButtonNavigateMain from "../../components/ButtonNavigateMain";
+import ButtonLogout from "../../components/ButtonLogout";
 
 /* 
   [test 계정]
@@ -17,11 +19,11 @@ const LoginForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [, set_accessToken] = useRecoilState(storedAccessToken)
+  const [, set_accessToken] = useRecoilState(storedAccessToken);
 
   const navigate = useNavigate();
 
-  const FormReset = () => {
+  const formReset = () => {
     setPassword("");
     setEmail("");
   };
@@ -52,27 +54,29 @@ const LoginForm = () => {
           "http://localhost:3000/auth/local",
           loginData,
           {
-            withCredentails: true,
+            withCredentials: true,
           }
         );
         console.log("loginAPI 응답", response);
-        
-        // console.log("accessToken", response.data.access_token); // accessToken 받아짐 🔵 
-        set_accessToken(response.data.access_token)  // recoil 에 accessToken 저장 | ✅ 이것도 intercept 차원에서 해야할지 고민 
-        
-        // 2. refreshToken 은 cookies 에 저장하기 
-        // console.log("refresh_token", response.data.refresh_token); // refreshToken 받아짐 🔵
-        
 
+        // 1. accessToken recoil 저장
+        set_accessToken(response.data.access_token); // recoil 에 accessToken 저장 | ✅ 이것도 intercept 차원에서 해야할지 고민
+
+        // 2. refreshToken 은 cookies 에 저장하기
+        const refreshToken = response.data.refresh_token;
+        const inSevenDays = new Date(
+          new Date().getTime() + 1000 * 60 * 60 * 24 * 7
+        );
+        document.cookie = `refreshToken=${refreshToken};expires=${inSevenDays.toUTCString()};path=/`;
+        // ;HttpOnly : js 로 접근 못 함. 웹서버로만 접근할 수 있음. | ;Secure : 이건 현재 http 로 통신하기 때문에 뺌.
 
         if (response) {
-          FormReset();
-          navigate("/main");
-        }
+          formReset();
 
-        // response 받으면, accessToken 을 recoil 에 저장 -> 저장한 걸 axios 인터셉터 헤더에 넣기
+          // navigate("/main"); // refreshToken 테스트 위해 잠시 주석
+        }
       } catch (error) {
-        console.log(error);
+        console.log("onSubmitLoginFetch 에러", error);
       } finally {
         setIsSubmitting(false); // isSubmitting 가 false 면 -> 버튼 활성화 -> 중복제출방지용
       }
@@ -107,6 +111,10 @@ const LoginForm = () => {
         />
       </form>
       <ButtonHome />
+      <ButtonNavigateMain />
+      <ButtonLogout formReset={formReset} />
+      
+
     </div>
   );
 };

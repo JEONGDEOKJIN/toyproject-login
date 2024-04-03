@@ -1,6 +1,7 @@
 import React from "react";
 import ButtonNavigateLogin from "../components/ButtonNavigateLogin";
 import ButtonNavigateRegister from "../components/ButtonNavigateRegister";
+import ButtonNavigateMain from "../components/ButtonNavigateMain";
 
 const Home = () => {
 
@@ -12,6 +13,7 @@ const Home = () => {
 
       <ButtonNavigateLogin/>
       <ButtonNavigateRegister/>
+      <ButtonNavigateMain />
 
 
     </>
