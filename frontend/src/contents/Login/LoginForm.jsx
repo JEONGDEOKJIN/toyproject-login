@@ -74,8 +74,7 @@ const LoginForm = () => {
 
         if (response) {
           formReset();
-
-          // navigate("/main"); // refreshToken 테스트 위해 잠시 주석
+          navigate("/main"); // refreshToken 테스트 위해 잠시 주석
         }
       } catch (error) {
         console.log("onSubmitLoginFetch 에러", error);
