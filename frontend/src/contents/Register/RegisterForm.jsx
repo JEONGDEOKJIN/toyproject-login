@@ -33,7 +33,7 @@ const RegisterForm = () => {
       email
     );
     setNameFieldError(!isNameValid); // // 에러메시지 보여주기 위함 : isNameValid 가 true 면 -> Error 메시지 안 보임 (false)
-    setPasswordFieldError(!isPasswordValid);
+    setPasswordFieldError(!isPasswordValid); // 유효성 정상이면 -> 1) valid 는 true 2) error 는 false 여야
     setEmailFieldError(!isEmailValid);
     const isRegisterValid = isNameValid && isPasswordValid && isEmailValid;
     console.log("isRegisterValid", isRegisterValid);

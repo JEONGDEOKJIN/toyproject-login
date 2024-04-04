@@ -20,6 +20,8 @@ const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [, set_accessToken] = useRecoilState(storedAccessToken);
+  const [emailFieldError, setEmailFieldError] = useState(false);
+  const [passwordFieldError, setPasswordFieldError] = useState(false);
 
   const navigate = useNavigate();
 
@@ -33,6 +35,8 @@ const LoginForm = () => {
 
     // 유효성 검사
     const { isEmailValid, isPasswordValid } = checkLoginValid(email, password);
+    setEmailFieldError(!isEmailValid); // 유효성 정상이면 -> 1) valid 는 true 2) error 는 false 여야
+    setPasswordFieldError(!isPasswordValid); // 유효성 정상이면 -> 1) valid 는 true 2) error 는 false 여야
 
     // ✅ 에러메시지 코드 추가 예정
 
@@ -93,12 +97,12 @@ const LoginForm = () => {
       <h1 className="font-bold text-[24px]">Sign In to DJ</h1>
 
       <form onSubmit={onSubmitLoginFetch}>
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-5">
           <div className="flex flex-col w-full h-[98px] gap-1">
             <label className="text-[15px] font-semibold ml-1">Email</label>
             <input
               name="email"
-              type="email"
+              type="text"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               // placeholder="ID"
@@ -110,6 +114,9 @@ const LoginForm = () => {
               active:border-gray-50 hover:shadow-searchBox hover:border-black/[.10] 
               transition-all ease-in-out h-[56px] w-full py-[18px] px-[20px] rounded-[12px] border-[1px] border-gray-200`}
             />
+            <p className="text-[#f2545b] mx-1 text-[14px]">
+              {emailFieldError ? "이메일 형식에 맞게 입력해주세요" : ""}{" "}
+            </p>
           </div>
 
           <div className="flex flex-col w-full h-[98px] gap-1">
@@ -128,6 +135,9 @@ const LoginForm = () => {
               active:border-gray-50 hover:shadow-searchBox hover:border-black/[.10] 
               transition-all ease-in-out h-[56px] w-full py-[18px] px-[20px] rounded-[12px] border-[1px] border-gray-200`}
             />
+            <p className="text-[#f2545b] mx-1 text-[14px]">
+              {passwordFieldError ? "비밀번호를 입력해주세요" : ""}
+            </p>
           </div>
 
           <div className="flex flex-col w-full h-[56px] gap-1">
