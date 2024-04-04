@@ -18,12 +18,12 @@ function App() {
           <Route path="/main" element={<Main />} />
         </Routes>
 
-      {/* 새로고침 했을 때, 로그인 유지 테스트  */}
-        {/* <GetNewTokenWrapper> */}
-        {/* <Routes> */}
-          {/* <Route path="/main" element={<Main />} /> */}
-        {/* </Routes> */}
-        {/* </GetNewTokenWrapper> */}
+        {/* 새로고침 했을 때, 로그인 유지 테스트  */}
+        {/* <GetNewTokenWrapper>
+          <Routes>
+            <Route path="/main" element={<Main />} />
+          </Routes>
+        </GetNewTokenWrapper> */}
       </RecoilRoot>
     </div>
   );

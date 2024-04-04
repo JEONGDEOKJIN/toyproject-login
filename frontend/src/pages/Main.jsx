@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import ButtonNavigateLogin from "../components/ButtonNavigateLogin";
 import getCookie from "../utils/getRefreshTokenFromCookie";
 import useAxiosInterceptor from "../apis/useAxiosInterceptor.js";
+import getNewAccessToken from "../apis/getNewAccessToken.js";
 
 const Main = () => {
   const axiosInstance = useAxiosInterceptor();
@@ -25,6 +26,10 @@ const Main = () => {
   useEffect(() => {
     getCookie();
   }, []);
+
+  useEffect( () => {
+    getNewAccessToken()
+  } , [])
 
   return (
     <div>

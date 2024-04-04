@@ -1,14 +1,12 @@
-import React from 'react'
-import RegisterForm from '../contents/Register/RegisterForm'
-
+import React from "react";
+import RegisterForm from "../contents/Register/RegisterForm";
 
 const Register = () => {
   return (
-    <div>
-      <RegisterForm/>
+    <div className="flex items-center justify-center w-screen min-h-screen bg-white">
+      <RegisterForm />
     </div>
+  );
+};
 
-  )
-}
-
-export default Register
+export default Register;

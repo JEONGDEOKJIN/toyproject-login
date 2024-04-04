@@ -4,8 +4,9 @@ import LoginForm from "../contents/Login/LoginForm";
 const Login = () => {
   return (
     <>
-      <LoginForm />
-      
+      <div className="flex items-center justify-center w-screen min-h-screen bg-white">
+        <LoginForm />
+      </div>
     </>
   );
 };

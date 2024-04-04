@@ -28,8 +28,6 @@ const LoginForm = () => {
     setEmail("");
   };
 
-
-
   const onSubmitLoginFetch = async (e) => {
     e.preventDefault();
 
@@ -85,37 +83,77 @@ const LoginForm = () => {
   };
 
   return (
-    <div>
-      로그인
+    <div className="w-full  max-w-[416px]  flex flex-col gap-6 ">
+      <div className="text-[14px]  text-neutral-500 justify-between flex-row flex max-w-[416px] w-full ">
+        <ButtonHome />
+        <ButtonNavigateMain />
+        <ButtonLogout formReset={formReset} />
+      </div>
+
+      <h1 className="font-bold text-[24px]">Sign In to DJ</h1>
+
       <form onSubmit={onSubmitLoginFetch}>
-        <input
-          name="email"
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="ID"
-        />
+        <div className="flex flex-col gap-4">
+          <div className="flex flex-col w-full h-[98px] gap-1">
+            <label className="text-[15px] font-semibold ml-1">Email</label>
+            <input
+              name="email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              // placeholder="ID"
+              // className="h-[56px] py-[18px] px-[20px]"
+              className={`${
+                email && email !== "" ? "bg-neutral-50" : "bg-white"
+              } 
+              focus:outline-none focus:shadow-searchBox focus:border-searchBoxBorder 
+              active:border-gray-50 hover:shadow-searchBox hover:border-black/[.10] 
+              transition-all ease-in-out h-[56px] w-full py-[18px] px-[20px] rounded-[12px] border-[1px] border-gray-200`}
+            />
+          </div>
 
-        <input
-          name="password"
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="password"
-        />
+          <div className="flex flex-col w-full h-[98px] gap-1">
+            <label className="text-[15px] font-semibold ml-1"> Password </label>
+            <input
+              name="password"
+              type="password"
+              value={password}
+              style={{ backgroundColor: "transparent" }}
+              onChange={(e) => setPassword(e.target.value)}
+              // placeholder="password"
+              className={`${
+                password && password !== "" ? "bg-neutral-50" : "bg-white"
+              } 
+              focus:outline-none focus:shadow-searchBox focus:border-searchBoxBorder 
+              active:border-gray-50 hover:shadow-searchBox hover:border-black/[.10] 
+              transition-all ease-in-out h-[56px] w-full py-[18px] px-[20px] rounded-[12px] border-[1px] border-gray-200`}
+            />
+          </div>
 
-        <input
-          type="submit"
-          value="카카오 로그인 버튼"
-          className="bg-gray-300 cursor-pointer"
-          disabled={isSubmitting} // isSubmitting 가 true 면 -> 버튼 비활성화 -> 중복제출방지
-        />
+          <div className="flex flex-col w-full h-[56px] gap-1">
+            <input
+              type="submit"
+              value="Log In"
+              className="rounded-[50px] text-[15px] cursor-pointer p-[18px] transition-all ease-in-out
+                
+              hover:border-black/[.10]   hover:bg-gray-500 bg-neutral-900 x-full text-neutral-50"
+              disabled={isSubmitting} // isSubmitting 가 true 면 -> 버튼 비활성화 -> 중복제출방지
+            />
+          </div>
+        </div>
       </form>
-      <ButtonHome />
-      <ButtonNavigateMain />
-      <ButtonLogout formReset={formReset} />
-      
 
+      <div className="flex justify-center x-full text-[14px] text-neutral-500">
+        <p>
+          Don't have an account?{" "}
+          <a
+            href="/register"
+            className="underline transition-all hover:font-semibold "
+          >
+            Sign up
+          </a>{" "}
+        </p>
+      </div>
     </div>
   );
 };
