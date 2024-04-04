@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { ButtonHome } from "../../components/ButtonHome";
 import { useNavigate } from "react-router-dom";
-import checkValid from "../../utils/checkValid";
-import ButtonNavigateMain from "../../components/ButtonNavigateMain";
-import ButtonLogout from "../../components/ButtonLogout";
+import checkRegisterValid from "../../utils/checkRegisterValid";
+import { ButtonHome } from "../../components/ButtonHome";
+// import  {ButtonNavigateMain } from "../../components/ButtonNavigateMain.jsx"
 
 const RegisterForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -28,7 +27,7 @@ const RegisterForm = () => {
     e.preventDefault();
 
     // 유효성 검사 | ✅ 로직 보완
-    const { isNameValid, isPasswordValid, isEmailValid } = checkValid(
+    const { isNameValid, isPasswordValid, isEmailValid } = checkRegisterValid(
       name,
       password,
       email
@@ -80,18 +79,19 @@ const RegisterForm = () => {
     <div className="w-full  max-w-[416px]  flex flex-col gap-6 ">
       <div className="text-[14px]  text-neutral-500 justify-between flex-row flex max-w-[416px] w-full ">
         <ButtonHome />
-        <ButtonNavigateMain />
+
+        {/* <ButtonNavigateMain /> */}
       </div>
 
       <h1 className="font-bold text-[24px]">Sign up to DJ </h1>
 
       <form onSubmit={onSubmitRegister}>
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-5">
           <div className="flex flex-col w-full h-[98px] gap-1">
             <label className="text-[15px] font-semibold ml-1">Email</label>
             <input
               name="email"
-              type="email"
+              type="text"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               // placeholder="ID"
@@ -103,6 +103,11 @@ const RegisterForm = () => {
               active:border-gray-50 hover:shadow-searchBox hover:border-black/[.10] 
               transition-all ease-in-out h-[56px] w-full py-[18px] px-[20px] rounded-[12px] border-[1px] border-gray-200`}
             />
+            <p className="text-[#f2545b] mx-1 text-[14px]">
+              {emailFieldError
+                ? "이메일 형식에 맞춰 기입해주세요 ex) dj@dj.com"
+                : ""}{" "}
+            </p>
           </div>
 
           <div className="flex flex-col w-full h-[98px] gap-1">
@@ -121,6 +126,11 @@ const RegisterForm = () => {
               active:border-gray-50 hover:shadow-searchBox hover:border-black/[.10] 
               transition-all ease-in-out h-[56px] w-full py-[18px] px-[20px] rounded-[12px] border-[1px] border-gray-200`}
             />
+            <p className="text-[#f2545b] mx-1 text-[14px]">
+              {passwordFieldError
+                ? "'최소 하나의 대소문자, 숫자, 특수문자' 및 '5글자 이상' 입력해주세요."
+                : ""}{" "}
+            </p>
           </div>
 
           <div className="flex flex-col w-full h-[98px] gap-1">
@@ -137,6 +147,9 @@ const RegisterForm = () => {
               active:border-gray-50 hover:shadow-searchBox hover:border-black/[.10] 
               transition-all ease-in-out h-[56px] w-full py-[18px] px-[20px] rounded-[12px] border-[1px] border-gray-200`}
             />
+            <p className="text-[#f2545b] mx-1 text-[14px]">
+              {nameFieldError ? "이름을 입력해주세요" : ""}{" "}
+            </p>
           </div>
 
           <div className="flex flex-col w-full h-[56px] gap-1">
@@ -152,47 +165,6 @@ const RegisterForm = () => {
         </div>
       </form>
     </div>
-
-    // <div>
-    //   Register
-    //   <form onSubmit={onSubmitRegister}>
-
-    // 1️⃣ 이메일
-    //     <input
-    //       name="email"
-    //       type="email"
-    //       placeholder="email"
-    //       value={email}
-    //       onChange={(e) => setEmail(e.target.value)}
-    //     />
-    //     {/* ✅ 에러메시지보여주기 */}
-
-    // 2️⃣ 비밀번호
-    //     <input
-    //       name="password"
-    //       type="password"
-    //       placeholder="password"
-    //       value={password}
-    //       onChange={(e) => setPassword(e.target.value)}
-    //     />
-
-    // 3️⃣ 이름
-    //     <input
-    //       name="name"
-    //       type="text"
-    //       placeholder="name"
-    //       value={name}
-    //       onChange={(e) => setName(e.target.value)}
-    //     />
-
-    //     <input
-    //       type="submit"
-    //       value="submitRegister"
-    //       disabled={isSubmitting} // isSubmitting 가 true 면 -> 버튼 비활성화 -> 중복제출방지
-    //     />
-    //   </form>
-    //   <ButtonHome />
-    // </div>
   );
 };
 

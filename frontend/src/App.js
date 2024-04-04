@@ -5,7 +5,6 @@ import Register from "./pages/Register.jsx";
 import Home from "./pages/Home";
 import Main from "./pages/Main.jsx";
 import { RecoilRoot } from "recoil";
-import GetNewTokenWrapper from "./components/GetNewTokenWrapper.jsx";
 
 function App() {
   return (
