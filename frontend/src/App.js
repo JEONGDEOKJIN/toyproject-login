@@ -14,7 +14,10 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/main" element={<Main />} />
+          {
+
+            <Route path="/main" element={<Main />} />
+          }
         </Routes>
 
         {/* 새로고침 했을 때, 로그인 유지 테스트  */}

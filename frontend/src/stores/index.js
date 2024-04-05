@@ -5,3 +5,7 @@ export const storedAccessToken = atom({
     default : ""
 }) 
 
+export const storedLoginData = atom({
+    key : "storedLoginData", 
+    default : ""
+}) 

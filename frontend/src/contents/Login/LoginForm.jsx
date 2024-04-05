@@ -4,7 +4,7 @@ import { ButtonHome } from "../../components/ButtonHome";
 import { useNavigate } from "react-router-dom";
 import checkLoginValid from "../../utils/checkLoginValid";
 import { useRecoilState } from "recoil";
-import { storedAccessToken } from "../../stores";
+import { storedAccessToken, storedLoginData } from "../../stores";
 import ButtonNavigateMain from "../../components/ButtonNavigateMain";
 import ButtonLogout from "../../components/ButtonLogout";
 
@@ -22,6 +22,9 @@ const LoginForm = () => {
   const [, set_accessToken] = useRecoilState(storedAccessToken);
   const [emailFieldError, setEmailFieldError] = useState(false);
   const [passwordFieldError, setPasswordFieldError] = useState(false);
+  const [, set_storedLoginData] = useRecoilState(storedLoginData);
+  // loginData 을 recoil 에 넣는다. 이게 비어있으면, useAxiosInterceptor 에서 accessToken에 토큰을 넣지 않는다.
+  // 그러면, 토큰 missing 이 나올 것 -> header 안에, 암것도 없으면 -> navigate 하게 하면 된다.
 
   const navigate = useNavigate();
 
@@ -49,6 +52,10 @@ const LoginForm = () => {
     };
     console.log("loginData", loginData);
     console.log("isRegisterValid", isRegisterValid);
+
+    if (loginData) {
+      set_storedLoginData(loginData);
+    }
 
     if (isRegisterValid) {
       setIsSubmitting(true); // '제출중' 이라는 의미 -> 버튼 비활성화

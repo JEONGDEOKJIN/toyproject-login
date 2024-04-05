@@ -27,10 +27,13 @@ const Main = () => {
     getCookie();
   }, []);
 
-  useEffect( () => {
-    getNewAccessToken()
-  } , [])
+  useEffect( () => {  
+    if(userInfo){
+      getNewAccessToken()
+    }
+  } , [userInfo])
 
+  
   return (
     <div>
       <div>Main 페이지</div>

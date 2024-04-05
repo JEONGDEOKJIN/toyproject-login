@@ -1,7 +1,8 @@
 import axios from "axios";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { storedAccessToken } from "../stores";
+import { storedAccessToken, storedLoginData } from "../stores";
 import getRefreshTokenFromCookie from "../utils/getRefreshTokenFromCookie";
+import { useNavigate } from "react-router-dom";
 
 // accessToken 을 매개변수로 받아서 해보기
 
@@ -21,6 +22,7 @@ const axiosInterceptor =  (accessToken) => {
       // 요청이 전달되기 전 작업을 처리하는 콜백함수
       config.headers["Content-Type"] = "application/json";
       config.headers["Authorization"] = `Bearer ${accessToken}`;
+      
 
       return config;
     },
@@ -56,6 +58,8 @@ const axiosInterceptor =  (accessToken) => {
               },
             }
           );
+
+          
 
           // 2. 새롭게 받은 accessToken 을 recoil 에 저장 -> 요청 헤더에 들어감 
             // 새롭게 받은 accessToken 은 어떻게 저장하지❓❓❓ 
