@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 import ButtonNavigateLogin from "../components/ButtonNavigateLogin";
 import getCookie from "../utils/getRefreshTokenFromCookie";
 import useAxiosInterceptor from "../apis/useAxiosInterceptor.js";
-import getNewAccessToken from "../apis/getNewAccessToken.js";
+import { useRecoilValue } from "recoil";
+import { storedAccessToken } from "../stores/index.js";
 
 const Main = () => {
   const axiosInstance = useAxiosInterceptor();
-
+  const _accessToken = useRecoilValue(storedAccessToken)
+  
   const [userInfo, setUserInfo] = useState(null); // 사용자 정보를 저장할 상태
 
   useEffect(() => {
@@ -20,18 +22,20 @@ const Main = () => {
       }
     };
     fetchUserInfo()
-  }, [axiosInstance]);
+    console.log("👽👽👽👽👽 fetchUserInfo ")
+  }, []);
   // 유저 accessToken 변경 -> recoil 저장값 변경 -> useRecoilValue 변경 -> axiosInstance가 변경 -> 함수를 다시 실행
 
   useEffect(() => {
     getCookie();
   }, []);
 
-  useEffect( () => {  
-    if(userInfo){
-      getNewAccessToken()
-    }
-  } , [userInfo])
+  
+  // useEffect( () => {  
+  //   if(userInfo){
+  //     getNewAccessToken()
+  //   }
+  // } , [userInfo])
 
   
   return (
