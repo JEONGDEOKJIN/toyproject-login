@@ -3,8 +3,8 @@ import getRefreshTokenFromCookie from "../utils/getRefreshTokenFromCookie";
 import { storedAccessToken } from "../stores";
 import { useRecoilState } from "recoil";
 
-const getNewAccessToken = async () => {
-  const refreshToken = getRefreshTokenFromCookie("refreshToken");
+const getNewAccessToken = async (refreshToken) => {
+  // const refreshToken = getRefreshTokenFromCookie("refreshToken");
 
   try {
     const response = await axios.post(
@@ -17,7 +17,8 @@ const getNewAccessToken = async () => {
       }
     );
     const newAccessToken = response.data.access_token
-    console.log("newAccessToken" , newAccessToken)
+    console.log("getNewAccessToken" , newAccessToken)
+
     return newAccessToken;
   } catch (error) {
     console.log("getNewAccessToken 에러", error);

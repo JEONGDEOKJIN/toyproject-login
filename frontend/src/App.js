@@ -1,45 +1,29 @@
 import "./App.css";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes} from "react-router-dom";
 import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
-import Home from "./pages/Home";
+import Home from "./pages/Home.jsx";
 import Main from "./pages/Main.jsx";
-import useCheckAccessTokenValid from "./utils/useCheckAccessTokenValid.js";
 import { useEffect, useState } from "react";
-import getNewAccessToken from "./apis/getNewAccessToken.js";
-import { storedAccessToken } from "./stores/index.js";
+import { loggedInState, storedAccessToken } from "./stores/index.js";
 import { useRecoilState } from "recoil";
+import PrivateRoute from "./components/PrivateRoute.jsx";
+import validifyToken from "./utils/validifyToken.js";
+import refreshAuth from "./utils/refreshAuth.js";
 
 function App() {
-  // const userAccessTokenValid = useCheckAccessTokenValid();
-  const navigate = useNavigate();
   const [userAccessTokenValid, setUserAccessTokenValid] = useState(false)
   const [_accessToken, set_accessToken] = useRecoilState(storedAccessToken);
+  const [isLoggedIn, setIsLoggedIn] = useRecoilState(loggedInState);
 
-    
-  const getTestNewToken = async () => {
-    const newAccessToken = await getNewAccessToken()
-    
-    try {
-      if(typeof newAccessToken === 'string' && newAccessToken.split('.').length === 3){
-        set_accessToken(newAccessToken) // 갈아끼우기
-        setUserAccessTokenValid(true)  // 입장하게 하기
-      }
-
-      
-      else{
-        navigate('/login')
-      }
-    } catch (error) {
-      console.log("getTestNewToken" , error)
-    } 
-  }
-  
   useEffect(() => {
-    getTestNewToken() 
-  }, []);
+    // refreshToken 전달해서, 새로운 accessToken 받고 -> 해당 토큰 valid 검사 -> PrivateRoute 전달
+    refreshAuth(set_accessToken).then(validifyToken(_accessToken, setUserAccessTokenValid )).then(setIsLoggedIn(true))
+  }, [_accessToken]);
+    // _accessToken 있을 때 검사해야 함 | 이걸 안 하면, 비회원도 인가페이지에 접근할 수 있게 됨 
   
-  console.log(userAccessTokenValid , "✍✍ userAccessTokenValid")
+  console.log(userAccessTokenValid , "✍✍ userAccessTokenValid") 
+  console.log(isLoggedIn , "✍✍ isLoggedIn") 
   
   return (
     <div className="App">
@@ -47,7 +31,15 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          {userAccessTokenValid === true ? <Route path="/main" element={<Main />} /> : ""}
+    
+          <Route 
+            path="/main"
+            element={
+              <PrivateRoute isLoggedIn={isLoggedIn} userAccessTokenValid={userAccessTokenValid}>  
+              <Main />
+            </PrivateRoute>              
+            }
+            />
         </Routes>
     </div>
   );

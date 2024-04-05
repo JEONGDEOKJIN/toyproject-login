@@ -1,19 +1,23 @@
 import React from "react";
-import { storedAccessToken } from "../stores";
+import { loggedInState, storedAccessToken } from "../stores";
 import { useRecoilState, useResetRecoilState } from "recoil";
 import deleteCookies from "../utils/deleteCookies";
 
 const ButtonLogout = ({ formReset }) => {
-  const [_accessToken, set_accessToken] = useRecoilState(storedAccessToken);
   const resetAccessToken = useResetRecoilState(storedAccessToken);
+  const resetLoginState = useResetRecoilState(loggedInState);
+  const [isLoggedIn, setIsLoggedIn] = useRecoilState(loggedInState);
 
-  const onClickLogout = () => {
+
+  const onClickLogout = async () => {
     deleteCookies("refreshToken");
     formReset();
 
+    setIsLoggedIn(false)  // 로그인 상태 초기화
+
     // accessToken 초기화
-    resetAccessToken(); // recoil 완전 초기화
-    // set_accessToken(undefined) // 토큰 변조 테스트 용 | undefined 문자열 자체가 넘어가서, '토큰 변조 에러 코드' 가 뜸
+      resetAccessToken(); // recoil 완전 초기화
+      // set_accessToken(undefined) // 토큰 변조 테스트 용 | undefined 문자열 자체가 넘어가서, '토큰 변조 에러 코드' 가 뜸
   };
 
 
@@ -27,9 +31,6 @@ const ButtonLogout = ({ formReset }) => {
         Logout
       </button>
 
-      {/* <button className="hover:font-semibold " onClick={onClickLogout}>
-        Logout
-      </button> */}
     </>
   );
 };
